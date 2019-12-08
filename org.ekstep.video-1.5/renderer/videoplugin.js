@@ -164,10 +164,10 @@ Plugin.extend({
                 "youtube": {
                     "iv_load_policy": 3
                 }
-            },
-            function () {});
+        },function () {});
         (this.isAudioMuted()) ? videojs(videoInstanceID).muted(true): videojs(videoInstanceID).muted(instance.muted);
         videojs(videoInstanceID).ready(function () {
+	 
             var youtubeInstance = this;
             youtubeInstance.src({
                 type: 'video/youtube',
@@ -175,6 +175,15 @@ Plugin.extend({
             });
             instance.videoPlayer = youtubeInstance;
             instance_this.addVideoEventListener(youtubeInstance);
+		    // console.log("Adding youtube events");
+	        // window.videoPlayer = instance.videoPlayer;
+		    window.addEventListener('message', function(event){
+		        if((event.type === 'message') && (typeof event.data !== 'object')) {
+			        if(instance.videoPlayer && (event.data == "pause.youtube")) {
+			            instance.videoPlayer.pause();
+			        }
+		        }
+		    });
         })
     },
     addVideoEventListener: function(videoPlayer) {
