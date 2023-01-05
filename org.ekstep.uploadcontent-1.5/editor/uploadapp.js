@@ -2,7 +2,7 @@
 var fileUploader;
 angular.module('org.ekstep.uploadcontent-1.5', []).controller('uploadController', ['$scope', '$injector', 'instance', function($scope, $injector, instance) {
     var plugin = org.ekstep.pluginframework.pluginManager.getPluginManifest("org.ekstep.uploadcontent");
-
+    console.log('hiiiii')
     $scope.contentService = ecEditor.getService(ServiceConstants.CONTENT_SERVICE);
     $scope.contentURL = undefined;
     $scope.newContent = false;
@@ -14,7 +14,8 @@ angular.module('org.ekstep.uploadcontent-1.5', []).controller('uploadController'
     $scope.disableDropdown = false;
     $scope.primaryCategoryList = [];
     $scope.H5PGuidanceDoc = ecEditor.getConfig('absURL') + ecEditor.resolvePluginResource(plugin.id, plugin.ver, 'assets/h5pcontentguidelines.pdf');
-
+    $scope.cloudStorage = ecEditor.getConfig('cloudStorage') + ecEditor.resolvePluginResource(plugin.id, plugin.ver, 'assets/h5pcontentguidelines.pdf');
+    console.log('------',cloudStorage);
     $scope.getCategoryList = function(){
         const contextPrimaryCategory = ecEditor.getContext('primaryCategories');
         if(!_.isUndefined(contextPrimaryCategory)){
@@ -382,7 +383,7 @@ angular.module('org.ekstep.uploadcontent-1.5', []).controller('uploadController'
                 var signedURL = res.data.result.pre_signed_url;
                 var config = {
                     processData: false,
-                    contentType: contentType,
+                    contentType: $scope.cloudStorage.provider === 'gcloud'? 'application/octet-stream' : contentType,
                 }
                 config = $scope.contentService.appendCloudStorageHeaders(config);
                 $scope.contentService.uploadDataToSignedURL(signedURL, $scope.uploader.getFile(0), config, function(err, res) {
