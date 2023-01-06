@@ -15,7 +15,7 @@ angular.module('org.ekstep.uploadcontent-1.5', []).controller('uploadController'
     $scope.primaryCategoryList = [];
     $scope.H5PGuidanceDoc = ecEditor.getConfig('absURL') + ecEditor.resolvePluginResource(plugin.id, plugin.ver, 'assets/h5pcontentguidelines.pdf');
     $scope.cloudStorage = ecEditor.getConfig('cloudStorage');
-    console.log('------',$scope,cloudStorage);
+    console.log('------',$scope.cloudStorage);
     $scope.getCategoryList = function(){
         const contextPrimaryCategory = ecEditor.getContext('primaryCategories');
         if(!_.isUndefined(contextPrimaryCategory)){
