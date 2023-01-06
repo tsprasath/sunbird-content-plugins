@@ -14,7 +14,7 @@ angular.module('org.ekstep.uploadcontent-1.5', []).controller('uploadController'
     $scope.disableDropdown = false;
     $scope.primaryCategoryList = [];
     $scope.H5PGuidanceDoc = ecEditor.getConfig('absURL') + ecEditor.resolvePluginResource(plugin.id, plugin.ver, 'assets/h5pcontentguidelines.pdf');
-    $scope.cloudStorage = ecEditor.getConfig('cloudStorage') + ecEditor.resolvePluginResource(plugin.id, plugin.ver, 'assets/h5pcontentguidelines.pdf');
+    $scope.cloudStorage = ecEditor.getConfig('cloudStorage');
     console.log('------',cloudStorage);
     $scope.getCategoryList = function(){
         const contextPrimaryCategory = ecEditor.getContext('primaryCategories');
