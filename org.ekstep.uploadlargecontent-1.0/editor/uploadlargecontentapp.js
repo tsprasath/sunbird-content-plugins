@@ -33,6 +33,7 @@ angular.module('org.ekstep.uploadlargecontent-1.0', []).controller('largeUploadC
     $scope.selectedPrimaryCategory = '';
     $scope.disableDropdown = false;
     $scope.primaryCategoryList = [];
+    $scope.cloudStorage = ecEditor.getConfig('cloudStorage');
     
     $scope.getCategoryList = function(){
         const contextPrimaryCategory = ecEditor.getContext('primaryCategories');
@@ -293,11 +294,11 @@ angular.module('org.ekstep.uploadlargecontent-1.0', []).controller('largeUploadC
     
     $scope.reader.onloadend = function (evt) {
         if (evt.target.readyState == FileReader.DONE) {
-            var uri = $scope.submitUri + '&comp=block&blockid=' + $scope.blockIds[$scope.blockIds.length - 1];
+            var uri = $scope.cloudStorage.provider === 'gcloud'? $scope.submitUri : $scope.submitUri + '&comp=block&blockid=' + $scope.blockIds[$scope.blockIds.length - 1];
             var requestData = new Uint8Array(evt.target.result);
             const fetchPromise = $scope.fetchRetry(uri, {
                 "headers": {
-                    "Content-Type": $scope.mimeType,
+                    "Content-Type": $scope.cloudStorage.provider === 'gcloud'? 'application/octet-stream' : $scope.mimeType,
                     "x-ms-blob-type": "BlockBlob"
                 },
                 "body": requestData,
