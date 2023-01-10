@@ -237,7 +237,7 @@ angular.module('org.ekstep.uploadlargecontent-1.0', []).controller('largeUploadC
     
     
     $scope.commitBlockList = function () {
-        var uri = $scope.submitUri + '&comp=blocklist';
+        var uri = $scope.cloudStorage.provider === 'gcloud'?$scope.submitUri : $scope.submitUri + '&comp=blocklist';
         var requestBody = '<?xml version="1.0" encoding="utf-8"?><BlockList>';
         for (var i = 0; i < $scope.blockIds.length; i++) {
             requestBody += '<Latest>' + $scope.blockIds[i] + '</Latest>';
@@ -245,7 +245,7 @@ angular.module('org.ekstep.uploadlargecontent-1.0', []).controller('largeUploadC
         requestBody += '</BlockList>';
         const blockListPromise = $scope.fetchRetry(uri, {
             "headers": {
-                "content-type": "application/x-www-form-urlencoded; charset=UTF-8",
+                "content-type": $scope.cloudStorage.provider === 'gcloud'?  'application/octet-stream' : "application/x-www-form-urlencoded; charset=UTF-8",
                 "x-ms-blob-content-type": $scope.selectedFile.type
             },
             "body": requestBody,
