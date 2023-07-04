@@ -40,7 +40,7 @@ angular.module('org.ekstep.uploadcontent-1.1', []).controller('uploadController'
                     $('#qq-upload-actions').hide();
                     $("#url-upload").hide();
                     $("#orLabel").hide();
-                    $scope.upload();
+                    // $scope.upload();
                 },
                 onError: function(id, name, errorReason) {
                     console.error("Unable to upload due to:", errorReason);
